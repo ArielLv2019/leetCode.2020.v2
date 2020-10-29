@@ -44,7 +44,7 @@ def divide_conquer(problem, param1, param2, ...):
 def BFS(graph, start, end):
   queue = []
   queue.append(start)
-  queue.add(start)
+  visited.add(start)// 树不需要记录visited，但是图需要
   
   while queue:
     node = queue.pop()
