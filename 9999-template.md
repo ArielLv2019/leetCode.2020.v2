@@ -57,3 +57,33 @@ def BFS(graph, start, end):
   # other processing work
   # ...
 ```
+```python
+// DFS + 递归
+visited = set()
+def DFS(node, visited):
+  visited.add(node)
+  # process current node here.
+  ...
+  for next_node in node.children():
+    if not nex_node in visited:
+      dfs(next_node, visited)
+```
+
+```python 
+// DFS + stack
+def DFS(self, tree):
+  if tree.root is None:
+    return []
+  
+  visited, stack = [], [tree.root]
+  while stack:
+    node = stack.pop()
+    visited.add(node)
+    
+    process(node)
+    nodes = generate_related_nodes(node)
+    stack.push(nodes)
+    
+  # other processing work
+  ...
+```
