@@ -43,6 +43,27 @@ func myPow(x float64, n int) float64 {
 ```
 
 ```go
+// 递归-2
+func myPow(x float64, n int) float64 {
+    if n == 0 {
+        return 1
+    }
+    
+    if n < 0 {
+        x = 1 / x
+        n = -n
+    }
+    
+    res := myPow(x, n / 2)
+    if n % 2 == 1 {
+        return res * res * x
+    }
+    
+    return res * res
+}
+```
+
+```go
 // loop
 func myPow(x float64, n int) float64 {
     if n == 0 {
