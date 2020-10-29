@@ -38,3 +38,22 @@ def divide_conquer(problem, param1, param2, ...):
   # process and generate the final result
   result = process_result(subResult1, subResult2, subResult3, ...)
 ```
+
+```python
+// BFS
+def BFS(graph, start, end):
+  queue = []
+  queue.append(start)
+  queue.add(start)
+  
+  while queue:
+    node = queue.pop()
+    visited.add(node)
+    
+    process(node)
+    nodes = generate_related_nodes(node)//做两件事： 1）找node的后继节点； 2）判断node的后继节点没有被访问过
+    queue.push(nodes)
+    
+  # other processing work
+  # ...
+```
