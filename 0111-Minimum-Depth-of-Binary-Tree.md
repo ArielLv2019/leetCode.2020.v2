@@ -56,3 +56,33 @@ public:
     }
 };
 ```
+```cpp
+// dfs
+class Solution {
+public:
+    int minDepth(TreeNode* root) {
+        if (root == nullptr){
+            return 0;
+        }
+        
+        int result = INT_MAX;
+        dfs(root, result, 0);
+        return result;
+    }
+    void dfs(TreeNode* root, int& result, int level){
+        if (root == nullptr){
+            return ;
+        }
+        if(root->left == nullptr && root->right == nullptr){
+            result = std::min(result, level+1);
+            return ;
+        }
+        if(root->left != nullptr){
+            dfs(root->left, result, level+1);
+        }
+        if(root->right != nullptr){
+            dfs(root->right, result, level+1);
+        }
+    }
+};
+```
