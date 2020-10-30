@@ -101,8 +101,31 @@ while left <= right:
     right = mid-1
  ``` 
   
-  
-  
+ ```java
+ // Trie
+ static final int ALPHABET_SIZE = 256; // 如果都是小写字母，直接用26就可以
+ 
+ static class TrieNode{
+  TrieNode[] children = new TireNode[ALPHABET_SIZE];
+  boolean isEndOfWord = false;
+  TireNode() {
+    isEndOfWord = false;
+    for (int i = 0; i < ALPHABET_SIZE; i++) {
+      children[i] = null;
+    }
+  }
+};
+```
+
+```python
+class TrieNode:
+  # Trie node class
+  def __init__(self):
+    self.children = [None] * ALPHABET_SIZE
+    
+    # isEndOfWord is True if node represent the end of the word
+    self.isEndOfWord = False
+```
   
   
   
