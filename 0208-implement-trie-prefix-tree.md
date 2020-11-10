@@ -127,3 +127,103 @@ func (this *Trie) StartsWith(prefix string) bool {
     return true
 }
  ```
+ ```cpp
+ class TrieNode{
+private:
+    friend class Trie;
+    std::vector<TrieNode*> child;
+    bool isWord;
+public:
+    TrieNode():child(vector<TrieNode*>(26)), isWord(false){  
+    }
+};
+class Trie {
+private:
+    TrieNode* root;
+public:
+    /** Initialize your data structure here. */
+    Trie(): root(new TrieNode()) {
+    }
+    
+    /** Inserts a word into the trie. */
+    void insert(string word) {
+        auto it = root;
+        for ( auto w : word ) {
+            if ( it->child[w-'a'] == nullptr ) {
+                it->child[w-'a'] = new TrieNode();
+            }
+            it = it->child[ w - 'a'];
+        }
+        it->isWord = true;
+    }
+    
+    /** Returns if the word is in the trie. */
+    bool search(string word) {
+        auto it = root;
+        for ( auto w : word ) {
+            if ( it->child[w - 'a'] == nullptr ){
+                return false;
+            }
+            it = it->child[ w - 'a'];
+        }
+        
+        return it->isWord;
+    }
+    
+    /** Returns if there is any word in the trie that starts with the given prefix. */
+    bool startsWith(string prefix) {
+        auto it = root;
+        for( auto p : prefix ){
+            if( it->child[p - 'a'] == nullptr ){
+                return false;
+            }
+            it = it->child[p - 'a'];
+        }
+        return true;
+    }
+};
+
+/**
+ * Your Trie object will be instantiated and called as such:
+ * Trie* obj = new Trie();
+ * obj->insert(word);
+ * bool param_2 = obj->search(word);
+ * bool param_3 = obj->startsWith(prefix);
+ */
+ ```
+ 
+ ```cpp
+ // set
+class Trie {
+private:
+   std::set<string> all_words;
+public:
+    /** Initialize your data structure here. */
+    Trie() {
+    }
+    
+    /** Inserts a word into the trie. */
+    void insert(string word) {
+        all_words.emplace(word);
+    }
+    
+    /** Returns if the word is in the trie. */
+    bool search(string word) {
+        return all_words.find(word) != all_words.end();
+    }
+    
+    /** Returns if there is any word in the trie that starts with the given prefix. */
+    bool startsWith(string prefix) {
+        auto itlow = all_words.lower_bound(prefix);
+        return (*itlow).rfind(prefix, 0) == 0;
+    }
+};
+
+/**
+ * Your Trie object will be instantiated and called as such:
+ * Trie* obj = new Trie();
+ * obj->insert(word);
+ * bool param_2 = obj->search(word);
+ * bool param_3 = obj->startsWith(prefix);
+ */
+ ```
