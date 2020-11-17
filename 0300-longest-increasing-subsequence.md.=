@@ -56,3 +56,42 @@ public:
     }
 };
 ```
+```cpp
+// binary search + lower_bound
+class Solution {
+public:
+    int lengthOfLIS(vector<int>& nums) {
+       if(nums.size() <= 0){
+           return 0;
+       } 
+        
+       vector<int> lis;
+       for(int i = 0; i < nums.size(); i++){
+          int idx = lower_bound(lis, nums[i]);
+          if(idx == lis.size()){
+              lis.emplace_back(nums[i]); 
+          }else{ // 替换
+              lis[idx]=nums[i];
+          }
+       }
+       return lis.size();
+    }
+private:
+    int lower_bound(vector<int>& nums, int target){
+        if(nums.size() <= 0){
+            return nums.size();
+        }
+        int left = 0, right = nums.size() - 1;
+        while(left <= right){
+            int mid = left + (right - left) / 2;
+            if(nums[mid] < target){
+                left = mid+1;
+            }else{
+                right = mid - 1;
+            }
+        }
+        
+        return left;
+    }
+};
+```
