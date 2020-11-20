@@ -109,6 +109,7 @@ private:
 ```cpp
 // 优化
 ```cpp上一版的实现
+// //对于prices的每一个元素j，保留dp[i-1][jj]-prices[jj] (jj: 0~j-1)的最大值
 class Solution {
 public:
     int maxProfit(int k, vector<int>& prices) {
@@ -125,7 +126,7 @@ public:
             int tmpMax = dp[i-1][0] - prices[0];
             for(int j = 1; j < prices.size(); j++){
                 dp[i][j] = max(dp[i][j-1], prices[j] + tmpMax);     
-                tmpMax = max(tmpMax, dp[i-1][j] - prices[j]);
+                tmpMax = max(tmpMax, dp[i-1][j] - prices[j]); //对于prices的每一个元素j，保留dp[i-1][jj]-prices[jj] (jj: 0~j-1)的最大值
             }           
         }
         return dp[k][prices.size()-1];
