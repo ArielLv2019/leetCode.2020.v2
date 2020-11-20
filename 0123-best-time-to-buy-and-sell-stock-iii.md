@@ -56,3 +56,74 @@ public:
     }
 };
 ```
+```cpp
+// If we slight swap the two 'for' loops:
+// We need to save max for each transaction, so there are k 'max'.
+class Solution {
+public:
+    int maxProfit(vector<int>& prices) {
+        if(prices.size() <= 0){
+            return 0;
+        }
+       
+        int K = 3;
+        vector<vector<int>> dp(K, vector<int>(prices.size()));
+        vector<int> tmpMax(K, -prices[0]);// tmp[k]: 第k次的最大值
+        for(int i = 1; i < prices.size(); ++i){
+            for(int k = 1; k < K; k++){
+                dp[k][i] = max(dp[k][i-1], prices[i] + tmpMax[k]); 
+                tmpMax[k] = max(tmpMax[k], dp[k-1][i] - prices[i]); 
+            }        
+        }
+        
+        return dp[2][prices.size() - 1];
+    }
+};
+```
+```cpp
+// We can find the second dimension (variable i) is only dependent on the previous one (i-1), so we can compact this dimension.
+// (We can choose the first dimension (variable k) as well since it is also only dependent on its previous one k-1, but can't compact both.)
+class Solution {
+public:
+    int maxProfit(vector<int>& prices) {
+        if(prices.size() <= 0){
+            return 0;
+        }
+       
+        int K = 3;
+        vector<int> dp(K);
+        vector<int> tmpMax(K, -prices[0]);
+        for(int i = 1; i < prices.size(); ++i){
+            for(int k = 1; k < K; k++){
+                dp[k] = max(dp[k], prices[i] + tmpMax[k]); 
+                tmpMax[k] = max(tmpMax[k], dp[k-1] - prices[i]); 
+            }        
+        }
+        
+        return dp[2];
+    }
+};
+```
+```cpp
+//In this case, K is 2. We can expand the array to all named variables:
+class Solution {
+public:
+    int maxProfit(vector<int>& prices) {
+        if(prices.size() <= 0){
+            return 0;
+        }
+       
+        int sell1 = 0, sell2 = 0;
+        int buy1 = -prices[0], buy2 = -prices[0];
+        for(int i = 1; i < prices.size(); ++i){
+            sell2 = max(sell2, prices[i] + buy2); // The maximum if we've just sold 2nd stock so far.
+            buy2 = max(buy2, sell1-prices[i]); // The maximum if we've just buy  2nd stock so far.
+            sell1 = max(sell1, prices[i] + buy1); // The maximum if we've just sold 1nd stock so far.
+            buy1 = max(buy1, -prices[i]);  // The maximum if we've just buy  1st stock so far.                  
+        }
+        
+        return sell2;
+    }
+};
+
+```
