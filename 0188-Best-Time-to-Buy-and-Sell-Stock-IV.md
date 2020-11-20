@@ -87,7 +87,7 @@ public:
         for(int i = 1; i <= k; i++){
             for(int j = 1; j < prices.size(); j++){
                 dp[i][j] = dp[i][j-1];
-                for(int m = 0; m < j; m++){
+                for(int m = 0; m < j; m++){ //prices[j] - prices[m] + dp[i-1][m] 被反复计算
                    dp[i][j] = max(dp[i][j], prices[j] - prices[m] + dp[i-1][m] );     
                 }
             }           
@@ -109,7 +109,8 @@ private:
 ```cpp
 // 优化
 ```cpp上一版的实现
-// //对于prices的每一个元素j，保留dp[i-1][jj]-prices[jj] (jj: 0~j-1)的最大值
+// 上一版本中，prices[j] - prices[m] + dp[i-1][m] 被反复计算
+// 对于prices的每一个元素j，保留dp[i-1][jj]-prices[jj] (jj: 0~j-1)的最大值
 class Solution {
 public:
     int maxProfit(int k, vector<int>& prices) {
