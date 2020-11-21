@@ -127,6 +127,24 @@ class TrieNode:
     self.isEndOfWord = False
 ```
   
+```python
+// 并查集伪代码
+function MakeSet(x)
+  x.parent := x
+
+function Find(x)
+  if x.parent == x
+    return
+  else
+    return Find(x.parent)
+    
+function Uinon(x,y)
+  xRoot := Find(x)
+  yRoot := Find(y)
+  xRoot.Parent := yRoot
   
+
+  
+```
   
   
