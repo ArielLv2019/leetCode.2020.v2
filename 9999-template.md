@@ -143,8 +143,61 @@ function Uinon(x,y)
   yRoot := Find(y)
   xRoot.Parent := yRoot
   
-
+// union优化一： //将rank低的合并到rank高的
+function Uinon(x,y)
+  xRoot := Find(x)
+  yRoot := Find(y)
+  if xRoot == yRoot //x,y 在同一个集合，直接返回
+    return
   
+  if xRoot.Rank < yRoot.Rank
+    xRoot.parent := yRoot
+  else if xRoot.Rank > yRoot.Rank
+    yRoot.parent := xRoot
+  else //xRoot和yRoot的rank相等
+    yRoot.parent := xRoot
+    xRoot.rank := xRoot.rank + 1  
 ```
+
+```
+//并查集的java实现
+public class QuickUnionUF{
+  private int[] roots;
+  
+  //初始化
+  public QuickUnionUF(int N){
+    roots = new int[N]l
+    for( int i = 0; i < N; i++){
+      roots[i] = i;
+    }
+  }
+  
+  // 查找
+  private int findRoot(int i){
+    int root = i;
+    while(root != roots[root]){ //查找i的最上面的root
+      root = roots[root];
+    }
+    
+    while( i != roots[i]){ //实现路径压缩，将root->i路径上所有元素指向最上面的root
+      int tmp = roots[i];
+      roots[i] = root;
+      i = tmp;
+    }
+    return root;
+  }
+  
+  public boolean connected(int p, int q){
+    return findRoot(p) == findRoot(q);
+  }
+  
+  public void union(int p, int q){
+    int pRoot = findRoot(p);
+    int qRoot = findRoot(q);
+    roots[pRoot] = qRoot;
+  }
+}
+```
+
   
   
