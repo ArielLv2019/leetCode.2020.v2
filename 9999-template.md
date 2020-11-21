@@ -159,7 +159,7 @@ function Uinon(x,y)
     xRoot.rank := xRoot.rank + 1  
 ```
 
-```
+```java
 //并查集的java实现
 public class QuickUnionUF{
   private int[] roots;
