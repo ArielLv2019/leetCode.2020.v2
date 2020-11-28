@@ -69,3 +69,55 @@ private:
     }
 };
 ```
+```cpp
+// 染色法 + BFS
+class Solution {
+public:
+    int numIslands(vector<vector<char>>& grid) {
+        vector<vector<bool>> visited(grid.size(), vector<bool>(grid[0].size()));
+        int result = 0;
+        for( int i = 0; i < grid.size(); i++){
+            for(int j = 0; j < grid[0].size(); j++){
+                if(grid[i][j] == '1' && visited[i][j] == false){
+                    result++;
+                    bfs(grid, visited, i, j);
+                }
+            }
+        }
+        return result;      
+    }
+private:
+    void bfs(vector<vector<char>>& grid, vector<vector<bool>>& visited, int i, int j){
+        if( !isValid(grid, visited, i, j) ){
+            return ;
+        }
+        
+        visited[i][j] = true;
+        deque<pair<int, int>> q;
+        q.emplace_back(make_pair(i,j)); 
+        vector<vector<int>> dirt{{0, 1},{0, -1},{1, 0},{-1,0}};
+        while ( !q.empty() ) {
+            int curX = q.front().first, curY = q.front().second;
+            q.pop_front();
+            for(int i = 0; i < dirt.size(); i++){
+                int newX = curX+dirt[i][0], newY = curY+dirt[i][1];
+                if (isValid(grid, visited, newX, newY)){
+                    visited[newX][newY] = true;
+                    q.emplace_back(make_pair(newX, newY));
+                }
+            }
+        }
+    }
+    
+    bool isValid(vector<vector<char>>& grid, vector<vector<bool>>& visited, int i, int j){
+        if( i < 0 || i >= grid.size() || j < 0 || j >= grid[0].size()){
+            return false;
+        }
+        if(grid[i][j] == '0' || visited[i][j]){
+            return false;
+        }
+        
+        return true;
+    }
+};
+```
