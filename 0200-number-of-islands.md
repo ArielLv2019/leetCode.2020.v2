@@ -122,7 +122,7 @@ private:
 };
 ```
 
-```
+```cpp
 //并查集
 class UnionFind{
 private:
