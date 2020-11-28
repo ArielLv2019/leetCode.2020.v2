@@ -121,6 +121,7 @@ private:
     }
 };
 ```
+
 ```
 //并查集
 class UnionFind{
@@ -197,5 +198,4 @@ public:
         return uf.getCount();    
     }
 };
-
 ```
