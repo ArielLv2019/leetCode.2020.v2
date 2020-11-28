@@ -143,7 +143,7 @@ function Uinon(x,y)
   yRoot := Find(y)
   xRoot.Parent := yRoot
   
-// union优化一： //将rank低的合并到rank高的
+// union优化一： 对并查集进行合并 && 将rank低的合并到rank高的
 function Uinon(x,y)
   xRoot := Find(x)
   yRoot := Find(y)
@@ -179,7 +179,7 @@ public class QuickUnionUF{
       root = roots[root];
     }
     
-    while( i != roots[i]){ //实现路径压缩，将root->i路径上所有元素指向最上面的root
+    while( i != roots[i]){ //union优化二：路径压缩，将root->i路径上所有元素指向最上面的root
       int tmp = roots[i];
       roots[i] = root;
       i = tmp;
