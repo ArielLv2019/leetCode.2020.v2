@@ -121,3 +121,81 @@ private:
     }
 };
 ```
+```
+//并查集
+class UnionFind{
+private:
+    vector<int> parent;
+    vector<int> rank;
+    int count;
+    
+public:
+    UnionFind(vector<vector<char>>& grid):count(0){
+        int m = grid.size(), n = grid[0].size();
+        parent = vector<int>(m*n, -1);
+        rank = vector<int>(m*n, 0);
+        for ( int i = 0; i < m; i++ ) {
+            for ( int j = 0; j < n; j++ ){
+                if ( grid[i][j] == '1' ) {
+                    parent[i*n+j] = i*n+j;
+                    count++;
+                }
+            }
+        }
+    }
+    
+    int Find(int i){
+        if( parent[i] == i) {
+            return i;
+        }
+        return Find(parent[i]);
+    }
+    
+    void unionUF(int x, int y){
+        int rootX = Find(x), rootY = Find(y);
+        if(rootX != rootY){
+            if( rank[rootX] < rank[rootY] ){
+                parent[rootY] = rootX;
+            }else {
+                if ( rank[rootX] > rank[rootY] ){
+                    parent[rootX] = rootY;
+                }else{
+                    parent[rootX] = rootY;
+                    rank[rootY]++;
+                }
+            }
+            count--;
+        }
+    } 
+    
+    int getCount(){
+        return count;
+    }
+};
+
+class Solution {
+public:
+    int numIslands(vector<vector<char>>& grid) {
+        if(grid.size() == 0 || grid[0].size() == 0){
+            return 0;
+        }
+        
+        UnionFind uf(grid);
+        vector<vector<int>> dirt{{0, 1},{0, -1},{1, 0},{-1,0}};
+        for( int i = 0; i < grid.size(); i++){
+            for(int j = 0; j < grid[0].size(); j++){
+                if(grid[i][j] == '1'){
+                    for(int k = 0; k < 4; k++){
+                        int newX = i + dirt[k][0], newY = j + dirt[k][1];
+                        if( newX >= 0 && newX < grid.size() && newY >= 0 && newY < grid[0].size() && grid[newX][newY] == '1'){
+                            uf.unionUF(i * grid[0].size() + j, newX * grid[0].size() + newY);
+                        }
+                    }
+                }
+            }
+        }
+        return uf.getCount();    
+    }
+};
+
+```
