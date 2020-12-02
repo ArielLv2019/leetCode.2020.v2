@@ -100,6 +100,25 @@ while left <= right:
   else:
     right = mid-1
  ``` 
+ ```python
+ //状态定义
+ dp = new int [m+1][n+1];
+ 
+ //初始状态
+ dp[0][0] = x;
+ dp[0][1] = y;
+ ...
+ 
+ // DP状态的推到
+ for i = 0; i <= n; i++{
+  for j = 0; j <= m; j++ {
+    ...
+    dp[i][j] = min{dp[i-1][j], dp[i][j-1], etc.}
+  }
+ }
+ 
+ return dp[m][n]; //最优解
+ ```
   
  ```java
  // Trie
@@ -199,5 +218,10 @@ public class QuickUnionUF{
 }
 ```
 
-  
+```
+位运算操作
+1） X & 1 == 1 OR == 0 判断奇偶 ( X % 2 == 1)
+2) X = X & (X-1): 清零最低位的1
+3) X & -X : 得到最低位的1
+```
   
