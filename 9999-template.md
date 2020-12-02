@@ -101,6 +101,8 @@ while left <= right:
     right = mid-1
  ``` 
  ```python
+ // DP
+ 
  //状态定义
  dp = new int [m+1][n+1];
  
@@ -220,7 +222,7 @@ public class QuickUnionUF{
 
 ```
 位运算操作
-1） X & 1 == 1 OR == 0 判断奇偶 ( X % 2 == 1)
+1) X & 1 == 1 OR == 0 判断奇偶 ( X % 2 == 1)
 2) X = X & (X-1): 清零最低位的1
 3) X & -X : 得到最低位的1
 ```
