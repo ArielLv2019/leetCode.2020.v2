@@ -49,7 +49,7 @@ public:
 };
 ```
 ```go
-// dp + 一维数组
+// Go： dp + 一维数组
 func minimumTotal(triangle [][]int) int {
     if len(triangle) == 0 || len(triangle[0]) == 0{
         return 0;
