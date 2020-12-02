@@ -48,3 +48,27 @@ public:
     }
 };
 ```
+```go
+// dp + 一维数组
+func minimumTotal(triangle [][]int) int {
+    if len(triangle) == 0 || len(triangle[0]) == 0{
+        return 0;
+    }
+    
+    dp := triangle[len(triangle) - 1]
+    for i := len(triangle) - 2; i >= 0; i--{
+        for j := 0; j < len(triangle[i]); j++{
+            dp[j] = triangle[i][j] + min(dp[j], dp[j+1])
+        }
+    }              
+    return dp[0]
+}
+
+func min( a, b int) int{
+    if a < b {
+        return a
+    }
+    
+    return b
+}
+```
