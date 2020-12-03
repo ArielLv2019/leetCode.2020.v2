@@ -25,65 +25,23 @@ Constraints:
 ```go
 // 递归
 func myPow(x float64, n int) float64 {
-    if n == 0 {
-        return 1
-    }
-    
     if n < 0 {
-        x = 1 / x
-        n = -n
-    }
-    
-    if n & 1 == 1 {
-        return x * myPow(x*x, n/2)
-    }
-    
-    return myPow(x*x, n/2)
-}
-```
-
-```go
-// 递归-2
-func myPow(x float64, n int) float64 {
-    if n == 0 {
-        return 1
-    }
-    
-    if n < 0 {
-        x = 1 / x
-        n = -n
-    }
-    
-    res := myPow(x, n / 2)
-    if n % 2 == 1 {
-        return res * res * x
-    }
-    
-    return res * res
-}
-```
-
-```go
-// loop
-func myPow(x float64, n int) float64 {
-    if n == 0 {
-        return 1
-    }
-    
-    if n < 0 {
-        x = 1 / x
-        n = -n
-    }
-    
-    res := 1.0
-    for n != 0{
-        if n % 2 == 1{
-            res *= x
+        if x == 0 {
+            return 0
         }
-        x *= x
-        n >>= 1
+        
+        return 1.0 / myPow(x, -n)
     }
     
-    return res
+    if n == 0 {
+        return 1
+    }
+    
+    result := myPow(x, n / 2);
+    if n % 2 == 1{
+        return result * result * x
+    }    
+    
+    return result * result
 }
 ```
