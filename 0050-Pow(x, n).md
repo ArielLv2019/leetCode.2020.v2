@@ -46,3 +46,33 @@ func myPow(x float64, n int) float64 {
     return res * res
 }
 ```
+
+```go
+// for loop
+func myPow(x float64, n int) float64 {
+    if x == 0 {
+        return 0
+    }
+    
+    if n == 0 {
+        return 1
+    }
+    
+    if n < 0 {
+        x = 1.0 / x
+        n = -n
+    }
+     
+    res, tmp := 1.0, x
+    for n != 0 {
+        if n % 2 == 1 {
+            res *= tmp
+        }
+        
+        tmp *= tmp
+        n >>= 1
+    } 
+    
+    return res
+}
+```
