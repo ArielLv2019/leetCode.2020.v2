@@ -25,23 +25,24 @@ Constraints:
 ```go
 // 递归
 func myPow(x float64, n int) float64 {
-    if n < 0 {
-        if x == 0 {
-            return 0
-        }
-        
-        return 1.0 / myPow(x, -n)
+    if x == 0 {
+        return 0
     }
     
     if n == 0 {
         return 1
     }
     
-    result := myPow(x, n / 2);
-    if n % 2 == 1{
-        return result * result * x
+    if n < 0 {
+        x = 1.0 / x
+        n = -n
+    }
+     
+    res := myPow(x, n / 2)
+    if n % 2 == 1 {
+        return  res * res * x
     }    
     
-    return result * result
+    return res * res
 }
 ```
