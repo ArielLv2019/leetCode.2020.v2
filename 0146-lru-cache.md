@@ -130,3 +130,129 @@ private:
  * obj->put(key,value);
  */
 ```
+```go
+// go: list
+type ListNode struct{
+    key int
+    val int
+}
+
+type LRUCache struct {
+    l *list.List
+    capacity int
+}
+
+func Constructor(capacity int) LRUCache {
+    return LRUCache{
+        l : list.New(),
+        capacity: capacity,
+    }
+}
+
+func (this *LRUCache) Get(key int) int {
+    for elem := this.l.Front() ; elem != nil; elem = elem.Next(){
+        if  listNode, ok := elem.Value.(ListNode); ok && listNode.key == key{
+            this.l.MoveToFront(elem)
+            return listNode.val
+        }
+    }
+    
+    return -1
+}
+
+
+func (this *LRUCache) Put(key int, value int)  {
+    // 已经存在
+    for elem := this.l.Front() ; elem != nil; elem = elem.Next(){
+        if listNode, ok := elem.Value.(ListNode); ok && listNode.key == key{
+            elem.Value = ListNode{
+                key: key,
+                val: value,
+            }
+            this.l.MoveToFront(elem)
+            return 
+        }
+    }
+    
+    if this.l.Len() == this.capacity {
+        elem := this.l.Back()
+        this.l.Remove(elem)
+    }
+    
+    this.l.PushFront(ListNode{
+        key: key,
+        val: value,
+    })
+}
+
+/**
+ * Your LRUCache object will be instantiated and called as such:
+ * obj := Constructor(capacity);
+ * param_1 := obj.Get(key);
+ * obj.Put(key,value);
+ */
+ }
+ ```
+ ```go
+ // hash table + list
+ type ListNode struct{
+    key int
+    val int
+}
+
+type LRUCache struct {
+    cache *list.List
+    search map[int]*list.Element
+    capacity int
+}
+
+func Constructor(capacity int) LRUCache {
+    return LRUCache{
+        cache : list.New(),
+        search: make(map[int]*list.Element),
+        capacity: capacity,
+    }
+}
+
+func (this *LRUCache) Get(key int) int {
+    if  elem, ok := this.search[key]; ok{
+        this.cache.MoveToFront(elem)
+        return elem.Value.(ListNode).val    
+    }
+    
+    return -1
+}
+
+func (this *LRUCache) Put(key int, value int)  {
+    // 已经存在
+    if  elem, ok := this.search[key]; ok{
+        elem.Value = ListNode{
+            key: key,
+            val: value,
+        }
+        this.cache.MoveToFront(elem)
+        this.search[key] = this.cache.Front()
+        return 
+    }
+                
+    if this.cache.Len() == this.capacity {
+        elem := this.cache.Back()
+        this.cache.Remove(elem)
+        delete(this.search, elem.Value.(ListNode).key)
+    }
+    
+    this.cache.PushFront(ListNode{
+        key: key,
+        val: value,
+    })
+    this.search[key] = this.cache.Front()
+}
+
+
+/**
+ * Your LRUCache object will be instantiated and called as such:
+ * obj := Constructor(capacity);
+ * param_1 := obj.Get(key);
+ * obj.Put(key,value);
+ */
+ ```
