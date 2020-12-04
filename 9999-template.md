@@ -231,3 +231,6 @@ public class QuickUnionUF{
 布隆过滤器
 https://www.cnblogs.com/cpselvis/p/6265825.html
 ```
+```
+利用哨兵简化编程难度的技巧，在很多代码实现中都有用到，比如插入排序、归并排序、动态规划等。
+```
