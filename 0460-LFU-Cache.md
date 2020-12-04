@@ -103,3 +103,108 @@ private:
  * obj->put(key,value);
  */
 ```
+```go
+// go
+type CacheNode struct{
+    val int
+    freq int
+}
+
+type LFUCache struct {
+    capacity int
+    minFreq int
+    keySearch map[int]*list.Element
+    freqMap map[int]*list.List
+    cache map[int]CacheNode    
+}
+
+
+func Constructor(capacity int) LFUCache {
+    return LFUCache{
+        capacity: capacity,
+        minFreq : 0,
+        keySearch : make(map[int]*list.Element), 
+        freqMap : make(map[int]*list.List),
+        cache : make(map[int]CacheNode),
+    }
+}
+
+
+func (this *LFUCache) Get(key int) int {
+    if cacheNode, ok := this.cache[key]; ok{
+        this.update(key)
+        return cacheNode.val
+    }
+    
+    return -1
+}
+
+
+func (this *LFUCache) Put(key int, value int)  {
+    if this.capacity == 0 { //注意边界条件
+        return 
+    }
+    
+    if _, ok := this.cache[key]; ok{
+        this.update(key) 
+        cacheVal := this.cache[key] 
+        this.cache[key] =  CacheNode{
+            val: value,
+            freq: cacheVal.freq,
+        }
+        
+        return 
+    }
+    
+    if len(this.cache) == this.capacity{
+        delElem := this.freqMap[this.minFreq].Front()
+        this.freqMap[this.minFreq].Remove(delElem)
+        if this.freqMap[this.minFreq].Len() == 0{
+            delete (this.freqMap, this.minFreq)
+        }
+        delete(this.keySearch, delElem.Value.(int))
+        delete(this.cache, delElem.Value.(int))
+    }
+    
+    this.minFreq = 1
+    if this.freqMap[this.minFreq] == nil{
+        this.freqMap[this.minFreq] = list.New()
+    }
+    this.freqMap[this.minFreq].PushBack(key)
+    this.keySearch[key] = this.freqMap[this.minFreq].Back()
+    this.cache[key] = CacheNode{
+        val : value,
+        freq: this.minFreq,
+    }
+    
+    return
+}
+
+func (this *LFUCache) update(key int){
+    cacheVal := this.cache[key]
+    
+    this.freqMap[cacheVal.freq].Remove(this.keySearch[key])
+    if this.freqMap[cacheVal.freq].Len() == 0 {
+        delete(this.freqMap, cacheVal.freq)
+        if this.minFreq == cacheVal.freq{  //注意更新minFreq的条件
+            this.minFreq++
+        }
+    } 
+    
+    cacheVal.freq++
+    if this.freqMap[cacheVal.freq] == nil{
+        this.freqMap[cacheVal.freq] = list.New()
+    }
+    this.freqMap[cacheVal.freq].PushBack(key)
+    this.keySearch[key] = this.freqMap[cacheVal.freq].Back()
+    
+    this.cache[key] = cacheVal
+}
+
+/**
+ * Your LFUCache object will be instantiated and called as such:
+ * obj := Constructor(capacity);
+ * param_1 := obj.Get(key);
+ * obj.Put(key,value);
+ */
+```
