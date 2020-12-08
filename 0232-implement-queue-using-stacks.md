@@ -97,3 +97,57 @@ public:
  * bool param_4 = obj->empty();
  */
  ```
+ ```
+ // push的时候处理顺序
+class MyQueue {
+public:
+    /** Initialize your data structure here. */
+    MyQueue() {
+    }
+    
+    /** Push element x to the back of queue. */
+    void push(int x) {
+        // Pushing all elements of s1 into s2 to push x at the end
+        while( !outStack.empty() ){
+            inStack.emplace(outStack.top());
+            outStack.pop();
+        }
+        inStack.emplace(x);// pushing x at top.
+		// now again reversing the stack into s1.
+        while( !inStack.empty() ){
+            outStack.emplace(inStack.top());
+            inStack.pop();
+        }
+    }
+    
+    /** Removes the element from in front of queue and returns that element. */
+    int pop() {
+        int result = peek();
+        outStack.pop();
+        return result;
+    }
+    
+    /** Get the front element. */
+    int peek() {
+        return outStack.top();
+    }
+    
+    /** Returns whether the queue is empty. */
+    bool empty() {
+        return inStack.empty() && outStack.empty();
+    }
+
+private:
+    std::stack<int> inStack;
+    std::stack<int> outStack;
+};
+
+/**
+ * Your MyQueue object will be instantiated and called as such:
+ * MyQueue* obj = new MyQueue();
+ * obj->push(x);
+ * int param_2 = obj->pop();
+ * int param_3 = obj->peek();
+ * bool param_4 = obj->empty();
+ */
+ ```
