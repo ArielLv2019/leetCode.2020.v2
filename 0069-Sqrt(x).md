@@ -20,21 +20,22 @@ Explanation: The square root of 8 is 2.82842..., and since
 class Solution {
 public:
     int mySqrt(int x) {
-        if(x == 0 || x == 1){
+        if( x == 0 || x == 1){
             return x;
-        }
-        int l = 1, r = x, res;
-        while(l <= r){
-            int mid = l + (r - l)/2; //防止溢出
-            if ( mid == x / mid ){
+        } 
+        int l = 1, r = x;
+        int res = 0;
+        while( l <= r ){
+            int mid = l + ( ( r - l ) >> 2 ); // 右移操作必须加括号
+            int ans = x / mid; //必须得用商，2147395599会溢出
+            if ( mid == ans ){
                 return mid;
-            }
-            if(mid < x / mid){
+            }else if( mid > ans ){
+                r = mid - 1;
+            }else{
                 l = mid + 1;
                 res = mid;
-            }else{
-                r = mid - 1;
-            }   
+            }            
         }
         return res;
     }
@@ -46,16 +47,15 @@ public:
 class Solution {
 public:
     int mySqrt(int x) {
-        if(x == 0 || x == 1){
+        if( x == 0 || x == 1){
             return x;
+        } 
+        long r = x;
+        while( r * r > x){
+            r = (r + x/r)/2;
         }
         
-        double ans = x;
-        double delta = 0.0001;
-        while( fabs(ans*ans - x) > delta){
-            ans = (ans + x / ans) /2;
-        }
-        return ans;
+        return r;
     }
 };
 ```
