@@ -234,3 +234,23 @@ https://www.cnblogs.com/cpselvis/p/6265825.html
 ```
 利用哨兵简化编程难度的技巧，在很多代码实现中都有用到，比如插入排序、归并排序、动态规划等。
 ```
+```
+// cpp String 处理
+stl库函数判断
+
+字母（不区分大小写）：isalpha();
+
+大写字母：isupper();
+
+小写字母：islower();
+
+数字：isdigit();
+
+字母和数字：isalnum();
+
+大小写字母转化：
+
+（1）转化为大写：toupper();
+
+（2）转化为小写：tolower();
+```
