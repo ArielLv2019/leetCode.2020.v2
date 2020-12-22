@@ -254,3 +254,12 @@ stl库函数判断
 
 （2）转化为小写：tolower();
 ```
+```
+// Go 判断字母、数字、空白符
+包 unicode 包含了一些针对测试字符的非常有用的函数（其中 ch 代表字符）：
+
+判断是否为字母： unicode.IsLetter(ch)
+判断是否为数字： unicode.IsDigit(ch)
+判断是否为空白符号： unicode.IsSpace(ch)
+这些函数返回一个布尔值。包utf8拥有更多与rune相关的函数。
+```
