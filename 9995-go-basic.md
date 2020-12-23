@@ -23,6 +23,10 @@ https://blog.csdn.net/benben_2015/article/details/79486077
 对包块中声明的变量进行计算和分配初始值
 执行包中的init函数
 ```
+## make和new的区别
+```
+https://www.cnblogs.com/ghj1976/archive/2013/02/12/2910384.html
+```
 ## 数组
 ```
 1） 数组长度是数组类型的一部分，[3]int与[4]int是不同的数组类型。
@@ -41,5 +45,9 @@ var ptr *[32]byte
 ```
 ## slice
 ```
-1) slice操作符s[i:j](其中0<=i<=j<=cap(s))
+1) slice操作符s[i:j](其中0<=i<=j<=cap(s))创建了一个新的slice，这个新的slice引用了序列s中从[i,j-1]索引位置的所有元素，s可以是数组，指向数组的指针或者slice。
+2）如果slice的引用超出了被引用对象的容量，即cap(s): 导致程序当机；
+  如果slice的引用超出了被引用对象的长度，即len(s): 最终slice会比原slice长。
+3）与数组不同，slice无法比较，不能用==来判断两个slice是否拥有相同的元素。
+标准库提供了极度优化的函数bytes.Equal来比较两个字节slice([]byte),但是对于其他类型的slice，需要自己写函数来进行比较。
 ```
