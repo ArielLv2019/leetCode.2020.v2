@@ -39,3 +39,7 @@ fmt.Println(a == b, a==c, b==c) // true, false, false
 3) 数组指针
 var ptr *[32]byte
 ```
+## slice
+```
+1) slice操作符s[i:j](其中0<=i<=j<=cap(s))
+```
