@@ -12,9 +12,52 @@ Output: 4
 Note:
 You may assume k is always valid, 1 ≤ k ≤ array's length.
 ```
-```
+```cpp
 // cpp: priority_queue
-kth-largest-element-in-an-array
+class Solution {
+public:
+    int findKthLargest(vector<int>& nums, int k) {
+        priority_queue<int, vector<int>, greater<int>> pq;
+        for( auto& num : nums){
+            pq.emplace(num);
+            if(pq.size() > k){
+                pq.pop();
+            }
+        }
+        
+        return pq.top();        
+    }
+};
+```
+```cpp
+// cpp:  heap
+class Solution {
+public:
+    int findKthLargest(vector<int>& nums, int k) {
+        if(nums.size() < k){
+            return {};
+        }
+        if(nums.size() == k){
+            make_heap(nums.begin(), nums.end(), std::greater<>{});
+            return nums[0];
+        }
+        
+        vector<int> res(k);
+        for(int i = 0; i < k; i++){
+            res[i]=nums[i];
+        }
+        make_heap(res.begin(), res.end(), std::greater<>{});
+        
+        for(int i = k; i < nums.size(); i++){
+            if(nums[i] > res[0]){
+                res[0] = nums[i];
+                make_heap(res.begin(), res.end(), std::greater<>{});
+            }
+        }
+        
+        return res[0];
+    }
+};
 ```
 
 ```
