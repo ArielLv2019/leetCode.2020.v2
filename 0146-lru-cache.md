@@ -130,6 +130,61 @@ private:
  * obj->put(key,value);
  */
 ```
+```cpp
+// cpp: list<int, int> : <key, value> cache
+//.     map<int, list::iterator> : <key, list::iterator> index
+class LRUCache {
+public:
+    LRUCache(int capacity): capacity(capacity) {
+        
+    }
+    
+    int get(int key) {
+        auto iter = index.find(key);
+        if( iter == index.end()){
+            return -1;
+        }
+        touch(iter);
+        return iter->second->second;
+    }
+    
+    void put(int key, int value) {
+        auto iter = index.find(key);
+        if( iter != index.end()){
+            touch(iter);
+            index[key]->second = value;
+            return;
+        }
+        
+        if(cache.size() == capacity){
+            auto iter = cache.back();
+            index.erase(iter.first);
+            cache.pop_back();
+        }
+        cache.push_front(make_pair(key, value));
+        index[key] = cache.begin();
+        return ;
+    }
+private:
+    void touch(map<int, list<pair<int, int>>::iterator>::iterator iter){
+        pair<int, int> p{iter->second->first, iter->second->second}; //必须要先把值存起来
+        cache.erase(iter->second);
+        cache.push_front(p);
+        iter->second = cache.begin();
+    }
+    
+    list<pair<int, int>> cache;
+    map<int, list<pair<int, int>>::iterator> index;
+    int capacity;
+};
+
+/**
+ * Your LRUCache object will be instantiated and called as such:
+ * LRUCache* obj = new LRUCache(capacity);
+ * int param_1 = obj->get(key);
+ * obj->put(key,value);
+ */
+```
 ```go
 // go: list
 type ListNode struct{
