@@ -42,8 +42,26 @@ public:
 };
 ```
 
+```go
+// go: 牛顿迭代法
+// f(n+1) = (f(n) + x/f(n)) / 2
+// r = (r + x/r) / 2
+func mySqrt(x int) int {
+    if x <= 1 {
+        return x
+    }
+    
+    target := int64(x)
+    res := target
+    for res * res > target {
+        res = (res + target/res)/2
+    }
+    
+    return int(res)
+}
+```
 ```cpp
-// 牛顿迭代法
+// cpp: 牛顿迭代法
 class Solution {
 public:
     int mySqrt(int x) {
