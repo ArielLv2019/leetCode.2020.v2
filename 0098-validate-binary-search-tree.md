@@ -27,6 +27,7 @@ Output: false
 Explanation: The root node's value is 5 but its right child's value is 4.
 ```
 ```go
+// go
 /**
  * Definition for a binary tree node.
  * type TreeNode struct {
@@ -67,7 +68,7 @@ func isValidBSTProxy(root, min, max *TreeNode) bool {
  *     Right *TreeNode
  * }
  */
-// 递归 + 中序遍历
+// go: 递归 + 中序遍历
 func isValidBST(root *TreeNode) bool {
 	if root == nil {
 		return true
@@ -90,9 +91,46 @@ func inorder(root *TreeNode) []int {
     return append(append(inorder(root.Left), root.Val), inorder(root.Right)...)
 }
 ```
-
+```go
+// go + stack
+/**
+ * Definition for a binary tree node.
+ * type TreeNode struct {
+ *     Val int
+ *     Left *TreeNode
+ *     Right *TreeNode
+ * }
+ */
+const INT_MAX = int(^uint(0)>>1)
+const INT_MIN = ^INT_MAX
+func isValidBST(root *TreeNode) bool {
+    if root == nil || 
+    (root.Left == nil && root.Right == nil) {
+        return true
+    }
+    
+    pre := INT_MIN
+    sta := []*TreeNode{}
+    for len(sta) > 0 || root != nil{
+        if root != nil{
+            sta = append(sta, root)
+            root = root.Left
+        }else{
+            root = sta[len(sta)-1]
+            sta = sta[0:len(sta)-1]
+            if pre >= root.Val{
+                return false
+            }
+            pre = root.Val
+            root = root.Right
+        }
+    }
+    
+    return true
+}
+```
 ```cpp
-// 递归 + 中序遍历
+// cpp: 递归 + 中序遍历
 /**
  * Definition for a binary tree node.
  * struct TreeNode {
