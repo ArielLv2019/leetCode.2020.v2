@@ -20,33 +20,65 @@ Window position                Max
  1  3  -1  -3  5 [3  6  7]      7
 
 Example 2:
-
 Input: nums = [1], k = 1
 Output: [1]
 
 Example 3:
-
 Input: nums = [1,-1], k = 1
 Output: [1,-1]
 
 Example 4:
-
 Input: nums = [9,11], k = 2
 Output: [11]
 
 Example 5:
-
 Input: nums = [4,-2], k = 2
 Output: [4]
 
- 
-
 Constraints:
-
     1 <= nums.length <= 105
     -104 <= nums[i] <= 104
     1 <= k <= nums.length
 
+Test Case:
+[1,3,-1,-3,5,3,6,7]
+3
+[1]
+1
+[1,-1]
+1
+[9, 11]
+2
+[1,3,1,2,0,5]
+3
+
+```
+```go
+// go + sliding window
+func maxSlidingWindow(nums []int, k int) []int {
+    if len(nums) < k{
+        return nil
+    }
+    res := []int{}
+    window := []int{}
+    for i := 0; i < len(nums); i++{
+        if i >= k && len(window) > 0 && window[0] <= i - k{
+            window = window[1:]
+        }
+        
+        for len(window) > 0 && nums[window[len(window)-1]] < nums[i]{
+            window = window[0:len(window)-1]
+        }
+        
+        window = append(window, i)
+        
+        if i >= k-1 {
+            res = append(res, nums[window[0]])
+        } 
+        
+    }
+    return res
+}
 ```
 ```cpp
 class Solution {
@@ -62,8 +94,8 @@ public:
                 window.pop_front();
             }
             
-            while(!window.empty() && nums[window[0]] < nums[i]){
-                window.pop_front();
+            while(!window.empty() && nums[window.back()] < nums[i]){
+                window.pop_back();
             }
             
             window.emplace_back(i); // Note: 保存的是下标
