@@ -35,6 +35,7 @@ Output: 0
 2
 ```
 ```go
+// go: 
 func lengthOfLongestSubstring(s string) int {
     start, res := -1, 0
     m := map[byte]int{}
