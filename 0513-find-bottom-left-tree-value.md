@@ -45,3 +45,44 @@ func dfs(root *TreeNode, depth int, maxDepth, res *int){
     return 
 }
 ```
+
+```cpp
+// dpp + BFS + deque
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
+ * };
+ */
+class Solution {
+public:
+    int findBottomLeftValue(TreeNode* root) {
+        if(root == nullptr){
+            return -1;
+        }
+        deque<pair<TreeNode*, int>> dq;
+        dq.emplace_back(make_pair(root, 1));
+        int res = root->val, depth = 1;        
+        while(!empty(dq)){
+            auto cur = dq.front();
+            dq.pop_front();
+            if (cur.second > depth){
+                depth = cur.second;
+                res = cur.first->val;
+            }
+            if(cur.first->left != nullptr) {
+                dq.emplace_back(make_pair(cur.first->left, cur.second+1));
+            }
+            if(cur.first->right != nullptr){
+                dq.emplace_back(make_pair(cur.first->right, cur.second+1));
+            }
+        }
+        return res;
+    }
+};
+```
