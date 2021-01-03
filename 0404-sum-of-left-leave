@@ -1,0 +1,76 @@
+```
+Find the sum of all left leaves in a given binary tree.
+
+Example:
+
+    3
+   / \
+  9  20
+    /  \
+   15   7
+
+There are two left leaves in the binary tree, with values 9 and 15 respectively. Return 24.
+```
+```go
+// go + dfs+递归
+/**
+ * Definition for a binary tree node.
+ * type TreeNode struct {
+ *     Val int
+ *     Left *TreeNode
+ *     Right *TreeNode
+ * }
+ */
+func sumOfLeftLeaves(root *TreeNode) int {
+    if root == nil{
+        return 0
+    }
+    ans := 0
+    if root.Left != nil{
+        if root.Left.Left == nil && root.Left.Right == nil{
+            ans += root.Left.Val
+        }else{
+            ans += sumOfLeftLeaves(root.Left)
+        }
+    }
+    
+    ans += sumOfLeftLeaves(root.Right)
+    
+    return ans
+}
+```
+```go
+// go + dfs + stack
+/**
+ * Definition for a binary tree node.
+ * type TreeNode struct {
+ *     Val int
+ *     Left *TreeNode
+ *     Right *TreeNode
+ * }
+ */
+func sumOfLeftLeaves(root *TreeNode) int {
+    if root == nil{
+        return 0
+    }
+    
+    res := 0
+    sta := []*TreeNode{root}
+    for len(sta) > 0{
+        cur := sta[len(sta)-1]
+        sta = sta[:len(sta)-1]
+        if cur.Left != nil{
+            if cur.Left.Left == nil && cur.Left.Right == nil{
+                res += cur.Left.Val
+            }else{
+                sta = append(sta, cur.Left)
+            }
+        }
+        if cur.Right != nil{
+            sta = append(sta, cur.Right)
+        }
+    }
+    
+    return res
+}
+```
