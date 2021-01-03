@@ -37,19 +37,16 @@ Output: 0
 ```go
 // go: 
 func lengthOfLongestSubstring(s string) int {
-    start, res := -1, 0
     m := map[byte]int{}
-    for i := 0; i < len(s); i++ {
-        preIdx, ok := m[s[i]]
-        if ok && preIdx > start{
+    start, res := -1, 0
+    for i := 0; i < len(s); i++{        
+        if preIdx, ok := m[s[i]]; ok && preIdx > start{
             start = preIdx
         }
-    
-        if curDist := i - start; curDist > res {
-            res = curDist
+        if curLen := i - start; curLen > res{
+            res = curLen
         }
-        
-        m[s[i]] = i        
+        m[s[i]] = i
     }
     return res
 }
