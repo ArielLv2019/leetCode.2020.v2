@@ -19,30 +19,14 @@ return true, as there exist a root-to-leaf path 5->4->11->2 which sum is 22.
 
 ```go
 // go: 递归
-/**
- * Definition for a binary tree node.
- * type TreeNode struct {
- *     Val int
- *     Left *TreeNode
- *     Right *TreeNode
- * }
- */
 func hasPathSum(root *TreeNode, sum int) bool {
     if root == nil{
         return false
     }
-    return hasPathSumProxy(root, sum)
-}
-
-func hasPathSumProxy(root *TreeNode, target int) bool{
-    if root == nil{
-        return false
-    }
-    
-    if root.Left == nil && root.Right == nil && root.Val == target{
+    if root.Left == nil && root.Right == nil && root.Val == sum {
         return true
     }
     
-    return hasPathSumProxy(root.Left, target - root.Val) || hasPathSumProxy(root.Right, target - root.Val)
+    return hasPathSum(root.Left, sum - root.Val) || hasPathSum(root.Right, sum - root.Val)
 }
 ```
