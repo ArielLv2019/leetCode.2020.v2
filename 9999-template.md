@@ -263,3 +263,9 @@ stl库函数判断
 判断是否为空白符号： unicode.IsSpace(ch)
 这些函数返回一个布尔值。包utf8拥有更多与rune相关的函数。
 ```
+
+```
+// go MAXINT, MININT
+const INT_MAX = int(^uint32(0)>>1)
+const INT_MIN = ^INT_MAX
+```
