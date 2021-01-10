@@ -16,7 +16,7 @@ Output: 0```
 ```
 
 ```cpp
-// stack
+// cpp + stack + dp
 class Solution {
 public:
     int longestValidParentheses(string s) {
@@ -38,4 +38,29 @@ public:
         return res;
     }
 };
+```
+
+```go
+// go + slice + dp
+func longestValidParentheses( s string ) int {
+    // write code here
+    sta := []int{-1}
+    res := 0
+    for i, ch := range s{
+        switch ch{
+            case '(':
+                sta = append(sta, i)
+            case ')':
+                sta = sta[:len(sta)-1]
+            if len(sta) > 0 {
+                if val := i - sta[len(sta)-1]; val > res{
+                    res = val
+                }
+            }else{
+                sta = append(sta, i)
+            }
+        }
+    }
+    return res
+}
 ```
