@@ -35,7 +35,7 @@ before the original logic, and if so, we can move left and right both towards th
 
 //最后一步可以直接判断nums[mid] = nums[right],如果是，就直接将right--
 ```
-```
+```go
 func search(nums []int, target int) bool {
     for left, right := 0, len(nums)-1; left <= right;{
         mid := left + (right - left) / 2
