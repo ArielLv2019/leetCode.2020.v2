@@ -132,3 +132,45 @@ public:
     }     
 };
 ```
+```go
+// go + slice
+/**
+ * Definition for a binary tree node.
+ * type TreeNode struct {
+ *     Val int
+ *     Left *TreeNode
+ *     Right *TreeNode
+ * }
+ */
+func kthSmallest(root *TreeNode, k int) int {
+    if root == nil || k <= 0{
+        return 0
+    }
+    path := make([]int, k)
+    idx := 0
+    inorder(root, path, &idx, k)
+    return path[k-1]
+}
+
+func inorder(root *TreeNode, path []int, idx *int , k int){
+    if root == nil || *idx == k {
+        return
+    }
+    inorder(root.Left, path, idx, k)
+    if *idx == k{
+        return
+    }
+    path[*idx] = root.Val
+    (*idx)++
+    if *idx == k {
+        return
+    }
+    inorder(root.Right, path, idx, k)
+}
+```
+
+```go
+// go + 递归
+
+```
+
