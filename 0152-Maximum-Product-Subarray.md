@@ -11,8 +11,54 @@ Input: [-2,0,-1]
 Output: 0
 Explanation: The result cannot be 2, because [-2,-1] is not a subarray.
 ```
+```go
+// go
+func maxProduct(nums []int) int {
+    if len(nums) == 0{
+        return 0
+    }
+    
+    // imax/imin stores the max/min product of
+    // subarray that ends with the current number A[i
+    res, maxV, minV := nums[0], nums[0], nums[0]
+    for i := 1; i < len(nums); i++{
+        // multiplied by a negative makes big number smaller, small number bigger
+        // so we redefine the extremums by swapping them
+        if nums[i] < 0{
+            maxV, minV = minV, maxV
+        } 
+        
+        // max/min product for the current number is either the current number itself
+        // or the max/min by the previous number times the current one
+        maxV = max(maxV * nums[i], nums[i])
+        minV = min(minV * nums[i], nums[i])
+        
+        // the newly computed max value is a candidate for our global result
+        if maxV > res{
+            res = maxV
+        }
+    }
+    
+    return res
+}
+
+func max(a, b int)int{
+    if a > b {
+        return a
+    }
+    
+    return b
+}
+
+func min(a, b int)int{
+    if a < b {
+        return a
+    }
+    return b
+}
+```
 ```cpp
-// 改良版二维数组
+//cpp: 改良版二维数组
 class Solution {
 public:
     int maxProduct(vector<int>& nums) {
