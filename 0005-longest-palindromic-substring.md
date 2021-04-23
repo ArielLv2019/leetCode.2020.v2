@@ -22,7 +22,34 @@ Input: s = "ac"
 Output: "a"
 ```
 ```go
-// 递归，执行最快
+// go: 返回字符串
+func longestPalindrome(A string) string {
+    if len(A) < 2{
+        return A
+    }
+    
+    start, end := 0, 1
+    for i := 0; i < len(A); i++{
+        Palindrome(A, i, i, &start, &end)
+        Palindrome(A, i, i+1, &start, &end)
+    }
+    
+    return A[start: end] //左开右闭
+}
+
+func Palindrome(A string, i, j int, start, end *int){
+    for i >= 0 && j < len(A) && A[i] == A[j]{
+        i--
+        j++
+    }
+    
+    if tmp := j - i - 1; tmp > ( *end - *start) {
+        *start, *end = i+1, j  //注意j是不需要减1的
+    }
+}
+```
+```go
+// 递归，执行最快, 返回长度
 package main
 
 /**
