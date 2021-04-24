@@ -53,7 +53,9 @@ public:
             for(int i = 0; i < count; i++){
                 auto elem = dq.front();
                 dq.pop();
-                row[i] = elem->val;
+                int idx = flag == 0? i : count - i - 1;
+                row[idx] = elem->val;
+                //row[i] = elem->val;
                 if(elem->left != nullptr){
                     dq.emplace(elem->left);
                 }
@@ -61,9 +63,9 @@ public:
                     dq.emplace(elem->right);
                 }
             }
-            if(flag == 1){
-                reverse(begin(row), end(row));
-            }
+            // if(flag == 1){
+            //     reverse(begin(row), end(row));
+            // }
             flag ^= 1;
             res.emplace_back(row);            
         }
