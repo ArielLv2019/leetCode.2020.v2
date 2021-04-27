@@ -57,3 +57,46 @@ public:
     }
 };
 ```
+```cpp
+// quick sort
+class Solution {
+public:
+    vector<int> sortArray(vector<int>& nums) {
+        if(nums.size() < 2){
+            return nums;
+        }
+        sortArray(nums, 0, nums.size() - 1);
+        return nums;
+    }
+    
+    void sortArray(vector<int>& nums, int left, int right) {
+        if(left >= right){
+            return ;
+        }
+        int idx = partation(nums, left, right);
+        sortArray(nums, left, idx-1);
+        sortArray(nums, idx+1, right);
+    }
+    
+    int partation(vector<int>& nums, int left, int right){
+        if(left >= right){
+            return left;
+        }
+        int pivotIdx = left + (right - left) / 2;
+        int tag = nums[pivotIdx]; //防止退化成最坏情况
+        swap(nums[right], nums[pivotIdx]);
+        while(left < right){
+            while(left < right && nums[left] <= tag){
+                left++;
+            }
+            swap(nums[right], nums[left]);
+            while(left < right && nums[right] >= tag){
+                right--;
+            }
+            swap(nums[left],nums[right]);
+        }
+        
+        return left;
+    }
+};
+```
