@@ -94,6 +94,7 @@ public:
             swap(nums[left], nums[right]);
         }
         
+        swap(nums[left], tag);
         return left;
     }
 };
