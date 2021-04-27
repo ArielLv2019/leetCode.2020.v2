@@ -59,7 +59,45 @@ public:
     }
 };
 ```
-
+```cpp
+//快速排序
+class Solution {
+public:
+    int findKthLargest(vector<int>& nums, int k) {
+        if(k <= 0 || nums.size() < k){
+            return -1;
+        }
+        int idx = partition(nums, 0, nums.size()- 1);
+        while(idx + 1 != k){
+            if(idx + 1 < k){
+                idx = partition(nums, idx+1, nums.size()- 1);
+            }else{
+                idx = partition(nums, 0, idx - 1);
+            }
+        }
+      
+        return nums[idx];
+       
+    }  
+    
+    int partition(vector<int>& nums, int left, int right){
+        int tag = nums[right];
+        
+        while(left < right){
+            while(left < right && nums[left] >= tag){
+                left++;
+            }
+            swap(nums[left], nums[right]);
+            while(left < right && nums[right] <= tag){
+                right--;
+            }
+            swap(nums[left], nums[right]);
+        }
+        
+        return left;
+    }
+};
+```
 ```
 // go: partation sort
 // 大->小排序
