@@ -26,6 +26,127 @@ Input: [5,1,4,null,null,3,6]
 Output: false
 Explanation: The root node's value is 5 but its right child's value is 4.
 ```
+```cpp
+// cpp: stack + pPre pointer
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
+ * };
+ */
+class Solution {
+public:
+    bool isValidBST(TreeNode* root) {
+        if(root == nullptr){
+            return true;
+        }
+        
+        stack<TreeNode*> sta;
+        TreeNode* pPre = nullptr;
+        while(root != nullptr || !sta.empty()){
+            while(root != nullptr){
+                sta.emplace(root);
+                root = root->left;
+            }
+            root = sta.top();
+            sta.pop();
+            if(pPre != nullptr && pPre->val >= root->val){
+                return false;
+            }
+            pPre = root;
+            root = root->right;
+            
+        }
+        
+        return true;
+    }
+};
+```
+```cpp
+//cpp: recurie + min + max
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
+ * };
+ */
+class Solution {
+public:
+    bool isValidBST(TreeNode* root) {
+        if(root == nullptr){
+            return true;
+        }
+        
+        return isValidBST(root, nullptr, nullptr);
+    }
+    
+    bool isValidBST(TreeNode* root,TreeNode *pMin,TreeNode *pMax) {
+        if(root == nullptr){
+            return true;
+        }
+        if(pMin != nullptr && pMin->val >= root->val){
+            return false;
+        }
+        if(pMax != nullptr && pMax->val <= root->val){
+            return false;
+        }
+        return isValidBST(root->left, pMin,root) && isValidBST(root->right, root, pMax) ;
+    }
+    
+};
+```
+```cpp
+//cpp: recurite + &pPre
+// 最快
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
+ * };
+ */
+class Solution {
+public:
+    bool isValidBST(TreeNode* root) {
+        if(root == nullptr){
+            return true;
+        }
+        
+        TreeNode *pPre = nullptr;
+        
+        return isValidBST(root, pPre);
+    }
+    
+    bool isValidBST(TreeNode* root,TreeNode* &pPre) {
+        if(root == nullptr){
+            return true;
+        }
+        if(!isValidBST(root->left, pPre)){
+            return false;
+        }
+        if(pPre != nullptr && pPre->val >= root->val){
+            return false;
+        }
+        pPre = root;
+        return isValidBST(root->right, pPre);
+    }
+    
+};
+```
 ```go
 // go
 /**
@@ -168,38 +289,4 @@ public:
     }
 };
 ```
-```cpp
-// Iteration: stack
-class Solution {
-public:
-    bool isValidBST(TreeNode* root) {
-        if( root == nullptr){
-            return true;
-        }
-        
-        std::stack<TreeNode*> s;
-        long pre = LONG_MIN;
-        // std::vector<int> vec;
-        while(!s.empty() || root != nullptr){
-            if( root != nullptr){
-                s.emplace(root);
-                root = root->left;
-            }else{
-                root = s.top();
-                s.pop();
-                if( pre >= root->val){
-                    return false;
-                }
-                pre = root->val;
-                //if( !vec.empty() && vec.back() >= root->val){
-                //    return false;
-                //}
-                //vec.emplace_back(root->val);
-                root = root->right;
-            }
-        }
-        
-        return true;
-    }
-};
-```
+  
