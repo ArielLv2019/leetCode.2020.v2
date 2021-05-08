@@ -18,6 +18,99 @@ Note:
     All inputs are guaranteed to be non-empty strings.
 
 ```
+```cpp
+// cpp: vector
+class Trie {
+public:
+    /** Initialize your data structure here. */
+    // child一定要初始化
+    Trie() : child(vector<Trie*>(26, nullptr)){
+        
+    }
+    
+    /** Inserts a word into the trie. */
+    void insert(string word) {
+        Trie* iter = this;
+        for(auto& w : word){
+            if(iter->child[w-'a'] == nullptr){
+                iter->child[w-'a'] = new Trie();
+            }
+            iter = iter->child[w-'a'];
+        }
+        iter->isWord = true;
+    }
+    
+    /** Returns if the word is in the trie. */
+    bool search(string word) {
+        return searchProxy(word, false);
+    }
+    
+    /** Returns if there is any word in the trie that starts with the given prefix. */
+    bool startsWith(string prefix) {
+        return searchProxy(prefix, true);
+    }
+private:
+    bool searchProxy(string word, bool isStart){
+        Trie* iter = this;
+        for(auto& w : word){
+            if(iter->child[w-'a'] == nullptr){
+                return false;
+            }
+            iter = iter->child[w-'a'];
+        }
+        return isStart? true : iter->isWord;
+    }
+    vector<Trie*> child;
+    bool isWord = false;
+};
+```
+```cpp
+// cpp + map
+法二： 借助map
+class Trie {
+public:
+    /** Initialize your data structure here. */
+    Trie(){
+        
+    }
+    
+    /** Inserts a word into the trie. */
+    void insert(string word) {
+        Trie* iter = this;
+        for(auto& w : word){
+            if(iter->child.find(w) == iter->child.end()){
+                iter->child[w] = new Trie();
+            }
+            iter = iter->child[w];
+        }
+        iter->isWord = true;
+    }
+    
+    /** Returns if the word is in the trie. */
+    bool search(string word) {
+        return searchProxy(word, false);
+    }
+    
+    /** Returns if there is any word in the trie that starts with the given prefix. */
+    bool startsWith(string prefix) {
+        return searchProxy(prefix, true);
+    }
+private:
+    bool searchProxy(string word, bool isStart){
+        Trie* iter = this;
+        for(auto& w : word){
+            if(iter->child.find(w) == iter->child.end()){
+                return false;
+            }
+            iter = iter->child[w];
+        }
+        return isStart? true : iter->isWord;
+    }
+    map<char, Trie*> child;
+    bool isWord = false;
+};
+```
+
 
 ```go
 // go
