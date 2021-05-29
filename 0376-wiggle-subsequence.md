@@ -1,4 +1,3 @@
-'''
 A wiggle sequence is a sequence where the differences between successive numbers strictly alternate between positive and negative. The first difference (if one exists) may be either positive or negative. A sequence with one element and a sequence with two non-equal elements are trivially wiggle sequences.
 
 For example, [1, 7, 4, 9, 2, 5] is a wiggle sequence because the differences (6, -3, 5, -7, 3) alternate between positive and negative.
@@ -30,9 +29,8 @@ Constraints:
 
 1 <= nums.length <= 1000
 0 <= nums[i] <= 1000
-'''
 
-'''cpp
+```cpp
 // dp
 class Solution {
 public:
@@ -65,8 +63,8 @@ public:
         return max(up[nums.size()-1], down[nums.size()-1]);
     }
 };
-'''
-'''cpp
+```
+```cpp
 //贪心
 class Solution {
 public:
@@ -92,4 +90,4 @@ public:
         return res;
     }
 };
-'''
+```
