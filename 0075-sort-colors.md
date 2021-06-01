@@ -31,6 +31,46 @@ n == nums.length
 1 <= n <= 300
 nums[i] is 0, 1, or 2.
 ```
-# 方法总结
+## 方法总结
++ 法一：排序
++ 法二：统计0，1，2的个数，将0， 1， 2重新插入数组
++ 法三：双指针
+++ zero和second指针分别指向下一个0/2要放的位置，用one指针遍历整个数组，
+```cpp
+while(one <= second){
+ if(nums[one]==0){
+  if(one==zero){one++, zero++}
+  else{swap(nums[one], nums[zero]); zero++;}
+ }else{
+  if(nums[one] == 2){swap(nums[one], nums[second--]);}
+  else{one++;} //nums[one] == 1;
+ }
+}
+```
 
+```cpp
+//双指针
+class Solution {
+public:
+    void sortColors(vector<int>& nums) {
+        int zero = 0,one = 0, second = nums.size()-1;
+        
+        while(one <= second){
+            if(nums[one] == 0){
+                if(one == zero){
+                    one++;
+                }else{
+                    swap(nums[zero], nums[one]);
+                }               
+                zero++;               
+            }else{
+                if(nums[one] == 2){
+                    swap(nums[one], nums[second--]);
+                }else{
+                    one++;
+                }
+            }
+        }
+    }
+};
 ```
