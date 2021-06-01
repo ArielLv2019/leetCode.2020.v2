@@ -37,6 +37,7 @@ nums[i] is 0, 1, or 2.
 + 法三：双指针
 ++ zero和second指针分别指向下一个0/2要放的位置，用one指针遍历整个数组，
 ```cpp
+// 伪代码
 while(one <= second){
  if(nums[one]==0){
   if(one==zero){one++, zero++}
@@ -69,6 +70,26 @@ public:
                 }else{
                     one++;
                 }
+            }
+        }
+    }
+};
+```
+
+```cpp
+//法二：统计个数的一种巧妙的实现方式
+class Solution {
+public:
+    void sortColors(vector<int>& nums) {
+        int n0 = -1, n1 = -1, n2 = -1;
+        
+        for(int i = 0; i < nums.size(); i++){
+            if(nums[i] == 0){
+                nums[++n2] = 2, nums[++n1] = 1, nums[++n0] = 0;
+            }else if(nums[i] == 1){
+                nums[++n2] = 2, nums[++n1] = 1;
+            }else if(nums[i] == 2){
+                nums[++n2] = 2;
             }
         }
     }
